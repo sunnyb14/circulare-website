@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Circulare – Circular Hospitality Guide & System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Circulare is a circular hospitality project helping restaurants, hotels and event venues turn waste into plants, products and simple ESG stories." />
+  <style>
+    :root {
+      --bg: #fcfcfa;
+      --bg-soft: #f3f4f6;
+      --bg-softer: #f9fafb;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --border-subtle: #e5e7eb;
+      --accent-yellow: #facc15;
+      --accent-yellow-soft: #fef9c3;
+      --accent-green: #16a34a;
+      --accent-green-soft: #dcfce7;
+      --accent-beige: #f5f0e6;
+      --radius-lg: 1.25rem;
+      --radius-md: 0.9rem;
+      --radius-pill: 999px;
+      --shadow-soft: 0 14px 40px rgba(15, 23, 42, 0.08);
+      --shadow-subtle: 0 8px 22px rgba(15, 23, 42, 0.04);
+      --max-width: 1024px;
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-margin-top: 5rem;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    header.nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(252, 252, 250, 0.96);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.7rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 40%;
+      background: radial-gradient(circle at 30% 20%, var(--accent-yellow), #f59e0b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1f2933;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.45);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-text strong {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-text span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      padding: 0.25rem 0.2rem;
+      opacity: 0.9;
+      position: relative;
+      border-radius: 999px;
+      transition: color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.25rem;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent-yellow), var(--accent-green));
+      transition: width 0.18s ease-out;
+    }
+
+    .nav-links a:hover {
+      color: #111827;
+      opacity: 1;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(22, 163, 74, 0.5);
+      background: var(--accent-green-soft);
+      color: #064e3b;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-cta-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      padding: 3.5rem 1.4rem;
+    }
+
+    .section-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, var(--accent-yellow), var(--accent-green));
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      margin: 0 0 0.4rem;
+      letter-spacing: 0.01em;
+    }
+
+    .section-title span.highlight {
+      background: linear-gradient(120deg, var(--accent-yellow), var(--accent-green));
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      max-width: 36rem;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* HERO */
+    .hero {
+      padding-top: 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+      margin: 0 0 0.75rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline strong {
+      color: #111827;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.4rem 0 0.5rem;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 0.75rem 1.35rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.12s ease-out, box-shadow 0.15s ease-out, background 0.18s ease-out, border-color 0.18s ease-out, color 0.18s ease-out;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-green), #22c55e);
+      color: #f9fafb;
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(22, 163, 74, 0.85);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 35px rgba(22, 163, 74, 0.25);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #111827;
+      border-color: rgba(209, 213, 219, 1);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(148, 163, 184, 1);
+      background: var(--bg-softer);
+    }
+
+    .btn .arrow {
+      font-size: 1rem;
+    }
+
+    .hero-note {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    .hero-note strong {
+      color: #111827;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-lg);
+      background: white;
+      padding: 1.2rem 1.2rem 1.3rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .hero-card-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .pill {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(209, 213, 219, 1);
+      background: var(--bg-softer);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+
+    .hero-steps {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .hero-step {
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(209, 213, 219, 1);
+      padding: 0.6rem 0.7rem;
+      background: var(--bg-soft);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-step strong {
+      display: block;
+      margin-bottom: 0.1rem;
+      color: #111827;
+      font-size: 0.8rem;
+    }
+
+    /* GRID / CARDS */
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.1rem 1.2rem;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .card h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card-tag {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    /* GUIDE SNAPSHOT */
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .guide-step {
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.8rem 0.9rem;
+      background: var(--accent-yellow-soft);
+      border: 1px solid rgba(250, 204, 21, 0.4);
+      font-size: 0.86rem;
+    }
+
+    .guide-step-number {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #854d0e;
+      margin-bottom: 0.3rem;
+    }
+
+    .guide-step-title {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    /* SPLITS */
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .list {
+      margin: 0.4rem 0 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .list li + li {
+      margin-top: 0.2rem;
+    }
+
+    /* SYSTEM SECTION */
+    .system-loop {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.05fr);
+      gap: 1.8rem;
+      align-items: flex-start;
+    }
+
+    .loop-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .loop-item {
+      border-radius: var(--radius-md);
+      padding: 0.7rem 0.85rem;
+      background: white;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-subtle);
+      font-size: 0.9rem;
+    }
+
+    .loop-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .loop-title {
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .loop-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .system-note {
+      margin-top: 0.8rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 1.3rem;
+    }
+
+    .package-card {
+      border-radius: var(--radius-md);
+      background: var(--bg-soft);
+      border: 1px solid var(--border-subtle);
+      padding: 0.8rem 0.9rem 0.95rem;
+      font-size: 0.88rem;
+    }
+
+    .package-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .package-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* MALAYSIA */
+    .flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .flag-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+
+    .timeline {
+      margin-top: 0.7rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .timeline-item + .timeline-item {
+      margin-top: 0.3rem;
+    }
+
+    .timeline-label {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    /* ABOUT / CONTACT */
+    .about-box, .contact-box {
+      border-radius: var(--radius-lg);
+      background: white;
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.1rem 1.2rem;
+      box-shadow: var(--shadow-subtle);
+      font-size: 0.9rem;
+    }
+
+    .about-name {
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .about-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .values-list {
+      margin: 0.2rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .contact-line {
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-highlight {
+      font-weight: 600;
+      color: #111827;
+    }
+
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.4rem 1.4rem;
+      background: var(--bg-soft);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .split,
+      .system-loop {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section {
+        padding-inline: 1.1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-inner {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        font-size: 0.82rem;
+      }
+
+      .hero {
+        padding-top: 3.3rem;
+      }
+
+      .hero-grid {
+        gap: 2rem;
+      }
+
+      .three-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .guide-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .package-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 540px) {
+      .guide-steps {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="nav">
+      <div class="nav-inner">
+        <a href="#top" class="brand">
+          <div class="brand-mark">C</div>
+          <div class="brand-text">
+            <strong>Circulare</strong>
+            <span>Circular Hospitality</span>
+          </div>
+        </a>
+        <nav class="nav-links">
+          <a href="#guide">Guide</a>
+          <a href="#system">System</a>
+          <a href="#malaysia">Malaysia &amp; SEA</a>
+          <a href="#about-contact">About &amp; Contact</a>
+          <a href="#contact" class="nav-cta">
+            <span class="nav-cta-dot"></span>
+            Talk about a pilot
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- HERO -->
+      <section class="section hero">
+        <div class="section-inner hero-grid">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Circular Hospitality Guide · By Circulare
+            </div>
+            <h1 class="hero-title">
+              From hospitality <span class="highlight">waste</span> to plants, products &amp; stories.
+            </h1>
+            <p class="hero-tagline">
+              Circulare is a circular hospitality project. This site is your guide to waste, linear vs circular economy,
+              and how venues in Malaysia &amp; Southeast Asia can plug into a simple circular system.
+            </p>
+            <div class="hero-actions">
+              <a href="#guide" class="btn btn-primary">
+                Explore the guide
+                <span class="arrow">↓</span>
+              </a>
+              <a href="#system" class="btn btn-secondary">
+                See how Circulare works
+                <span class="arrow">→</span>
+              </a>
+            </div>
+            <p class="hero-note">
+              <strong>For restaurants, hotels &amp; event venues</strong> – and anyone who wants to understand circular
+              economy without the jargon.
+            </p>
+          </div>
+          <aside class="hero-card" aria-label="What this site gives you">
+            <div class="hero-card-title">What you’ll find here</div>
+            <div class="hero-pill-row">
+              <div class="pill">
+                <span class="pill-dot"></span>
+                Learn: Waste &amp; circularity basics
+              </div>
+              <div class="pill">
+                <span class="pill-dot"></span>
+                See: Hospitality examples
+              </div>
+              <div class="pill">
+                <span class="pill-dot"></span>
+                Do: Circulare as a plug-in system
+              </div>
+            </div>
+            <div class="hero-steps">
+              <div class="hero-step">
+                <strong>1 · Waste &amp; Linear</strong>
+                How hospitality waste really works in a “take–make–dump” world.
+              </div>
+              <div class="hero-step">
+                <strong>2 · Circular Basics</strong>
+                Circular economy in plain language, with venue-specific examples.
+              </div>
+              <div class="hero-step">
+                <strong>3 · Global → Malaysia</strong>
+                Where the world is heading and why Malaysia &amp; SEA are ripe.
+              </div>
+              <div class="hero-step">
+                <strong>4 · Circulare System</strong>
+                How Circulare plugs into your waste, plants and data.
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- GUIDE SNAPSHOT -->
+      <section id="guide" class="section">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Circular Hospitality Guide
+            </div>
+            <h2 class="section-title">
+              Start with the basics: <span class="highlight">waste, linear systems &amp; circular thinking.</span>
+            </h2>
+            <p class="section-subtitle">
+              This guide is written for people who live and work in hospitality – owners, managers, chefs,
+              event planners, students – and want sustainability that makes sense in a busy venue.
+            </p>
+          </div>
+          <div class="guide-steps">
+            <div class="guide-step">
+              <div class="guide-step-number">Guide · 01</div>
+              <div class="guide-step-title">Waste in hospitality 101</div>
+              <p>
+                Pre-consumer vs post-consumer waste, main waste streams, and why food waste is such a big climate and cost issue.
+              </p>
+            </div>
+            <div class="guide-step">
+              <div class="guide-step-number">Guide · 02</div>
+              <div class="guide-step-title">The linear economy</div>
+              <p>
+                “Take → Make → Use → Dump” explained through buffets, banquets and day-to-day service.
+              </p>
+            </div>
+            <div class="guide-step">
+              <div class="guide-step-number">Guide · 03</div>
+              <div class="guide-step-title">Circular hospitality 101</div>
+              <p>
+                Circular economy in simple words, with examples for restaurants, hotels and event venues.
+              </p>
+            </div>
+            <div class="guide-step">
+              <div class="guide-step-number">Guide · 04</div>
+              <div class="guide-step-title">Global → Malaysia → SEA</div>
+              <p>
+                Where we are today, and why this region is such a powerful place to prototype circular systems.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WASTE & LINEAR / CIRCULAR BASICS -->
+      <section class="section" style="background: var(--bg-soft);">
+        <div class="section-inner split">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Waste &amp; linear systems
+            </div>
+            <h2 class="section-title">What does “waste” really look like in hospitality?</h2>
+            <p class="section-subtitle">
+              Waste isn’t just smelly bins out the back. It’s food you paid for but never sold, single-use items
+              that touch a guest for seconds, and materials that could have had a second life.
+            </p>
+            <ul class="list">
+              <li><strong>Pre-consumer waste:</strong> over-ordering, prep off-cuts, buffet over-production.</li>
+              <li><strong>Post-consumer waste:</strong> plate leftovers, bar garnishes, event scraps.</li>
+              <li><strong>Packaging &amp; materials:</strong> glass bottles, cardboard, napkins, decor.</li>
+            </ul>
+            <p class="section-subtitle" style="margin-top: 0.9rem;">
+              In a linear economy, most of this follows the same path: <strong>Take → Make → Use → Dump</strong>.
+              Materials are extracted, turned into products, used once, then sent to landfill or incineration.
+            </p>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-tag">Linear vs circular</div>
+              <h3>From “make–use–dump” to “loop &amp; regenerate”</h3>
+              <p>
+                Circular economy asks a different question: instead of asking “How do we dispose of this?” we ask
+                “How do we design it so it stays useful, feeds something else, or restores nature?”
+              </p>
+              <ul class="list">
+                <li>Design menus, storage and portions to <strong>reduce</strong> waste.</li>
+                <li>Turn food scraps into <strong>compost and soil</strong> instead of landfill methane.</li>
+                <li>Use that soil to grow <strong>plants and herbs</strong> guests can actually see.</li>
+                <li>Repair, reuse and repurpose decor and equipment instead of replacing by default.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CIRCULAR PRINCIPLES -->
+      <section class="section">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Circular hospitality 101
+            </div>
+            <h2 class="section-title">
+              Five ideas to shift from linear to circular in your venue.
+            </h2>
+            <p class="section-subtitle">
+              Different thinkers use different frameworks. One simple way to look at circularity is through five verbs:
+              <strong>Narrow, Slow, Close, Regenerate, Inform.</strong> Here’s how they show up in hospitality.
+            </p>
+          </div>
+          <div class="three-grid">
+            <div class="card">
+              <h3>Narrow</h3>
+              <p>
+                Use fewer resources per meal served. Think smart menu design, accurate ordering, and portion sizes that match what guests actually eat.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Slow</h3>
+              <p>
+                Keep products and materials in use for longer. Repair furniture, reuse decor, choose durable items
+                instead of disposable where it makes sense.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Close</h3>
+              <p>
+                Close the loop on materials. Turn food scraps into compost and soil. Route glass, cardboard and other
+                streams into recycling or reuse rather than landfill.
+              </p>
+            </div>
+          </div>
+          <div class="three-grid" style="margin-top: 1rem;">
+            <div class="card">
+              <h3>Regenerate</h3>
+              <p>
+                Use your waste to restore rather than deplete. Use compost to grow plants, support urban greenery,
+                or even small kitchen gardens that feed back into your menu.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Inform</h3>
+              <p>
+                Track what’s happening and tell the story. Data on waste, diversion and plants can become ESG reports,
+                guest-facing signage, and staff motivation.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Circulare’s role</h3>
+              <p>
+                Circulare is being designed to help venues do all five – in a way that fits real-world hospitality,
+                not just a theory slide.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SYSTEM -->
+      <section id="system" class="section" style="background: var(--bg-soft);">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Circulare system
+            </div>
+            <h2 class="section-title">
+              A plug-and-play circular system for restaurants, hotels &amp; event venues.
+            </h2>
+            <p class="section-subtitle">
+              Circulare is not a single product. It’s a loop. We plug into your waste, your plants and your stories,
+              and try to handle the heavy systems work so your team can keep serving guests.
+            </p>
+          </div>
+
+          <div class="system-loop">
+            <div class="loop-list">
+              <div class="loop-item">
+                <div class="loop-label">Step 01</div>
+                <div class="loop-title">Audit &amp; design</div>
+                <p>
+                  Understand your venues, service style and waste flows. Map where sorting stations, collection points and plant opportunities make sense.
+                </p>
+                <div class="loop-meta">
+                  <strong>You:</strong> share how your operation really works. <strong>Circulare:</strong> proposes a simple, tailored loop.
+                </div>
+              </div>
+              <div class="loop-item">
+                <div class="loop-label">Step 02</div>
+                <div class="loop-title">Sorting &amp; collection</div>
+                <p>
+                  Help your team separate key streams like food, glass and cardboard without slowing service. Set up regular collection.
+                </p>
+                <div class="loop-meta">
+                  <strong>You:</strong> use clear signage &amp; routines. <strong>Circulare:</strong> provides tools and picks up on schedule.
+                </div>
+              </div>
+              <div class="loop-item">
+                <div class="loop-label">Step 03</div>
+                <div class="loop-title">Processing &amp; partners</div>
+                <p>
+                  Work with vetted processors to turn food waste into compost and soil blends, and route other streams into recycling and reuse.
+                </p>
+                <div class="loop-meta">
+                  <strong>Circulare:</strong> handles the messy logistics and tracking behind the scenes.
+                </div>
+              </div>
+              <div class="loop-item">
+                <div class="loop-label">Step 04</div>
+                <div class="loop-title">Plants &amp; products back to you</div>
+                <p>
+                  Grow and deliver plants, soil-based products or simple items that visibly link back to your venue’s waste footprint.
+                </p>
+                <div class="loop-meta">
+                  <strong>You:</strong> choose where they live in your venue. <strong>Circulare:</strong> maintains and rotates.
+                </div>
+              </div>
+              <div class="loop-item">
+                <div class="loop-label">Step 05</div>
+                <div class="loop-title">ESG data &amp; stories</div>
+                <p>
+                  Provide simple numbers and storylines: waste diverted, CO₂e avoided, plants in circulation, and “this plant came from last month’s event.”
+                </p>
+                <div class="loop-meta">
+                  <strong>You:</strong> share with guests, teams &amp; stakeholders. <strong>Circulare:</strong> keeps the data flowing.
+                </div>
+              </div>
+            </div>
+            <aside>
+              <div class="card">
+                <div class="card-tag">Packages (draft ideas)</div>
+                <h3>Start simple, then add loops.</h3>
+                <p>
+                  Circulare is still in development, but the intention is to offer clear “plug-in” options that match how ready your venues are.
+                </p>
+                <div class="package-grid">
+                  <div class="package-card">
+                    <div class="package-name">Lite</div>
+                    <p>
+                      Focused on waste sorting, collection and basic monthly impact summaries. A first step for busy venues.
+                    </p>
+                    <div class="package-note">For: “We want to start, but keep it very simple.”</div>
+                  </div>
+                  <div class="package-card">
+                    <div class="package-name">Greenery</div>
+                    <p>
+                      Waste loop + plant leasing. Plants grown from your waste story appear in lobbies, dining rooms and event spaces.
+                    </p>
+                    <div class="package-note">For: “We want guests to see the impact.”</div>
+                  </div>
+                  <div class="package-card">
+                    <div class="package-name">Full loop</div>
+                    <p>
+                      Waste, plants and ESG storytelling combined. Deeper data, co-created campaigns and staff engagement.
+                    </p>
+                    <div class="package-note">For: “We want circularity as part of our brand.”</div>
+                  </div>
+                </div>
+                <p class="system-note">
+                  Exact offers will evolve with pilots. The core idea stays: <strong>Circulare plugs into your world, not the other way around.</strong>
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- MALAYSIA & SEA -->
+      <section id="malaysia" class="section">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Malaysia &amp; Southeast Asia
+            </div>
+            <h2 class="section-title">
+              Why Malaysia is a powerful place to prototype circular hospitality.
+            </h2>
+            <p class="section-subtitle">
+              The region is full of exactly the kind of venues where circular systems can shine: food-obsessed cities,
+              event-heavy calendars, and teams who already know how to make magic out of chaos.
+            </p>
+          </div>
+
+          <div class="split">
+            <div>
+              <div class="flag">
+                <span class="flag-dot"></span>
+                On the ground
+              </div>
+              <p class="section-subtitle">
+                Think hotel buffets, wedding banquets, convention centres, cafés, mamak spots. Huge flows of food and packaging,
+                intense peaks on event days, and a lot of potential value in what currently goes to landfill.
+              </p>
+              <ul class="list">
+                <li>Strong food and event culture – high volumes, high visibility.</li>
+                <li>Growing interest in sustainability and ESG from guests &amp; corporates.</li>
+                <li>Existing networks of suppliers, nurseries and processors to build with.</li>
+              </ul>
+            </div>
+            <aside>
+              <div class="card">
+                <div class="card-tag">From pilot to network</div>
+                <h3>Malaysia → Southeast Asia</h3>
+                <p>
+                  The aim is to prove circular hospitality systems in one place, then grow carefully into a network
+                  that connects multiple cities and venues.
+                </p>
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <div class="timeline-label">Phase 1 – Pilots</div>
+                    <div>Work with a small number of committed partners in Malaysia to make the loop real.</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-label">Phase 2 – Local network</div>
+                    <div>Connect more venues, refine logistics and data, share playbooks and stories.</div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="timeline-label">Phase 3 – SEA circuits</div>
+                    <div>Explore city-to-city expansion across Southeast Asia where hospitality waste is plentiful and stories matter.</div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT & CONTACT -->
+      <section id="about-contact" class="section" style="background: var(--bg-soft);">
+        <div class="section-inner">
+          <div class="section-header">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              About &amp; contact
+            </div>
+            <h2 class="section-title">
+              Circulare is early – and that’s an invitation.
+            </h2>
+            <p class="section-subtitle">
+              This project is still forming. That means there’s room for pilots, collaboration and honest feedback
+              from people who live in hospitality every day.
+            </p>
+          </div>
+
+          <div class="split" id="contact">
+            <div class="about-box">
+              <div class="about-name">Sunny</div>
+              <div class="about-role">Hospitality human, systems thinker &amp; founder of Circulare.</div>
+              <p>
+                Circulare grew out of a simple question: <em>What if the plants in a venue could literally be grown from that venue’s own waste?</em>
+              </p>
+              <p>
+                From there, the idea expanded into a loop – waste, soil, plants, products, data, stories – designed for the specific realities
+                of restaurants, hotels and event spaces in this part of the world.
+              </p>
+              <p>
+                The work ahead is to turn that loop into something practical, affordable and genuinely helpful for busy teams and curious guests.
+              </p>
+              <ul class="values-list">
+                <li>Systems that respect people’s time.</li>
+                <li>Visible impact, not just PDFs.</li>
+                <li>Local first, scalable second.</li>
+              </ul>
+            </div>
+            <div class="contact-box">
+              <h3 style="margin-top:0;margin-bottom:0.4rem;">Say hi to Circulare</h3>
+              <p class="contact-line">
+                If you’re a venue, potential partner, student or just someone who cares about circularity and hospitality,
+                you’re welcome to reach out.
+              </p>
+              <p class="contact-line">
+                <span class="contact-highlight">How to use this section:</span><br />
+                Replace this paragraph with your preferred contact details (email, WhatsApp, LinkedIn, form link) once you’re ready.
+              </p>
+              <p class="contact-line">
+                For now, imagine a simple line here like:<br />
+                <em>“Email us at hello@circulare.example to explore pilots, collaborations or to use this guide in your teaching.”</em>
+              </p>
+              <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.7rem;">
+                You can also take this text to any platform you like – a basic site, a Notion page, a PDF – and adapt it as Circulare evolves.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Circulare. Circular hospitality in progress.</div>
+        <div>Built as a living guide – it will keep changing as the loop gets tested and refined.</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
